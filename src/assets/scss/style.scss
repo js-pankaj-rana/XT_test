@@ -1,0 +1,19 @@
+body {
+    font-family: "Aril", sans-serif;
+}
+
+.overlay {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+.overlay ~ .spinner-border {
+    position: absolute;
+    left: calc(50vw - 18px);
+    top: calc(50vh - 18px);
+    z-index: 10;
+}
