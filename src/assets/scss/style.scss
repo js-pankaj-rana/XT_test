@@ -9,11 +9,113 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.9);
+    opacity: 0.5;
 }
 .overlay ~ .spinner-border {
     position: absolute;
     left: calc(50vw - 18px);
     top: calc(50vh - 18px);
     z-index: 10;
+}
+.bg-grey {
+    background-color: #f6f3ec;
+}
+.comment-container {
+    font-size: 14px;
+    width: 100%;
+    .comments-header {
+        background-color: #ff6600;
+        color: #ffffff;
+        padding:10px 5px;
+    }
+}
+.pagination-wrap {
+    padding: 10px;
+    color: #fc6d0e;
+    font-weight: bolder;
+}
+.text-small {
+    font-size: 12px;
+}
+.text-grey {
+    color: #666666;
+}
+
+a.text-normal {
+    color: #000000;   
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
+.text-normal {
+    font-size: 16px;
+}
+.btn-link.button-counter {
+    color: #fc6d0e;
+    font-weight: bold;
+    font-size: 14px;
+    outline: none;
+    padding: 0 5px;
+    box-shadow: none;
+    &:focus{
+        outline: none;
+    }
+    &:hover{
+        color: #fc6d0e;
+        text-decoration: none;
+    }
+}
+.button-link {
+    padding: 0 5px !important;
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    border: 0;
+    &:focus {
+        outline: none;
+    }
+
+   
+}
+.icon {
+    width: 10px;
+    height: 10;
+    vertical-align: middle;
+    cursor: pointer;
+    &-upward {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 3px 6px 3px;
+        border-color: transparent transparent #5b5b62 transparent;
+    }
+}
+.tbody {
+    tr {
+        &:nth-child(odd) {
+            background-color: #f5f6f0;
+        }
+        &:nth-child(even) {
+            background-color: #e3e4df;
+        }
+    }
+}
+
+.chart-container {
+    height: 300px;
+}
+.text-red {
+    color: #fc6d0e !important;
+    }
+.border-red {
+    border-color: #fc6d0e;
+    border-width: 2px;
+}
+
+.news-cell {
+    padding: 10px 0;
 }

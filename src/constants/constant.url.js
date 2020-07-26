@@ -1,0 +1,1 @@
+export const SEARCH_COMMENTS = "https://hn.algolia.com/api/v1/search"

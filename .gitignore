@@ -1,0 +1,6 @@
+node_modules
+
+#remove yarn file
+
+yarn-error.log
+yarn.lock
