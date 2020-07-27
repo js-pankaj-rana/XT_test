@@ -5,8 +5,16 @@ import NewsHeader from '../components/newsHeader';
 import NewsRow from '../components/newsRow';
 import {Chart}  from '../components/chart';
 import {Pagination}  from '../components/pagination';
+import {PageNotFound}  from '../components/pageNotFound';
+import {withRouter, Redirect } from "react-router";
+import {handlePaginationData } from './../utils';
 
-import {requestCommentAPI, voteIncrementPoint, removeNewsObject}  from '../action';
+import {
+    requestCommentAPI,
+    voteIncrementPoint,
+    removeNewsObject,
+    localStorageNewsPageWise
+}  from '../action';
 
 
 class App extends Component {
@@ -18,13 +26,17 @@ class App extends Component {
         }
     }
     pageDecrement = () => {
-        if(this.state.page === 0) return;
+        let {page} = this.state;
+        if(page === 0) return;
+
         this.setState( (prevState) => {
             return {
                 page: prevState.page - 1 
             }
         }, () => {
-        this.props.requestCommentAPI(this.state.page.toString())
+            let page = this.state.page.toString();
+            this.props.history.push('/'+page);
+            handlePaginationData(page, this.props.localStorageNewsPageWise, this.props.requestCommentAPI);
         })
     }
     
@@ -34,10 +46,13 @@ class App extends Component {
                 page: prevState.page + 1 
             }
         }, () => {
-           this.props.requestCommentAPI(this.state.page.toString())
-        }
+           this.props.history.push('/'+this.state.page)
+           let page = this.state.page.toString();
+            handlePaginationData(page, this.props.localStorageNewsPageWise, this.props.requestCommentAPI);
+            }
         )
     }
+
     voteIncrement = (e) => {
         let objId = e.currentTarget.dataset.objectid;
         this.props.voteIncrementPoint(objId)
@@ -47,9 +62,33 @@ class App extends Component {
         this.props.removeNewsObject(objId)
     }
     componentWillMount(){
-        this.props.requestCommentAPI(this.state.page.toString())
+        let page = this.props.history.location && this.props.history.location.pathname.toString().split('/')[1];
+       
+        if( localStorage.getItem(page) && localStorage.getItem(page).length > 20 ){
+
+            let dataPage = parseInt(page)
+            this.setState({page: dataPage})
+            let storData = JSON.parse(localStorage.getItem(dataPage.toString()));
+            this.props.localStorageNewsPageWise(storData);
+        }
+        else {
+            let dataPage = parseInt(page)
+            page ? this.setState({
+                page: dataPage
+            }, () => this.props.requestCommentAPI(this.state.page.toString())) : this.props.requestCommentAPI(this.state.page.toString())
+        }
     }
+
+    componentDidUpdate(prevState, nextState){
+        localStorage.setItem(nextState.page, JSON.stringify(this.props.comments))
+    }
+
     render(){
+        let page = this.props.history.location && this.props.history.location.pathname && this.props.history.location.pathname.toString().split('/')[1];
+
+        if (!page) {
+            return <Redirect to='/0'/>;
+          }
 
         return (
             <div className="bg-grey">
@@ -57,7 +96,7 @@ class App extends Component {
                     <h1 className="header text-red">Hacker News</h1>
                 </div>
             {this.props.comments.loading && <Loader />}
-            {this.props.comments && this.props.comments.hits && this.props.comments.hits.length > 0 && (<div className="container">
+            {this.props.comments && this.props.comments.hits && this.props.comments.hits.length > 0 ? (<div className="container">
             <Pagination 
                     pageState={this.state.page} 
                     pageDecrement={this.pageDecrement}
@@ -84,7 +123,9 @@ class App extends Component {
                 {
                     this.props.comments && this.props.comments.chartData && this.props.comments.chartData.length > 1 &&  <Chart chartData={this.props.comments.chartData}/>
                 }
-            </div>)
+            </div>) : (
+                <PageNotFound />
+            )
             }
             </div>
         )
@@ -93,18 +134,19 @@ class App extends Component {
 
 const mapStateToProps = state => {
         return {
-            comments: state
+            comments: state.commentReducer
         }
     }
   
 const mapDispatchToProps = dispatch => ({
     requestCommentAPI: (page) => dispatch(requestCommentAPI(page)),
     voteIncrementPoint: (objId) => dispatch(voteIncrementPoint(objId)),
-    removeNewsObject: (objId) => dispatch(removeNewsObject(objId))
+    removeNewsObject: (objId) => dispatch(removeNewsObject(objId)),
+    localStorageNewsPageWise: (obj) => dispatch(localStorageNewsPageWise(obj))
   });
   
-  export default connect(
+  export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-  )(App);
+  )(App));
   

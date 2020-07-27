@@ -83,7 +83,13 @@ export const commentReducer = (state = defaultState, action) => {
           actualData: actualDataFilterV,
           chartData: chartDataFilterV
           }
-      
+          
+
+    case actionType.LOCAL_STORAGE_NEWS_PAGE_WISE:
+      return {
+        ...action.payload
+      }
+
     default: 
       return state;  
 

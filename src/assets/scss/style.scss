@@ -20,6 +20,7 @@ body {
 }
 .bg-grey {
     background-color: #f6f3ec;
+    min-height: 100vh;
 }
 .comment-container {
     font-size: 14px;
@@ -28,7 +29,11 @@ body {
         background-color: #ff6600;
         color: #ffffff;
         padding:10px 5px;
+        &.w-10{
+            width: 8%;
+        }
     }
+
 }
 .pagination-wrap {
     padding: 10px;

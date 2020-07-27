@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader component snapshot testing 1`] = `
+Array [
+  <div
+    className="overlay"
+  />,
+  <div
+    className="spinner-border text-light"
+    role="status"
+  >
+    <span
+      className="sr-only"
+    >
+      Loading...
+    </span>
+  </div>,
+]
+`;

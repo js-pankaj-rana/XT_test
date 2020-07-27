@@ -5,16 +5,20 @@ import * as serviceWorker from './serviceWorker';
 import './assets/css/bootstrap.min.css';
 import './assets/scss/style.scss';
 
-import App from './containers/app';
+import {RouterHOC} from './router';
 import configureStore from './store';
 import rootSaga from './saga';
 
-const store = configureStore();
+import {PersistGate} from 'redux-persist/integration/react';
+
+const {store, persistor} = configureStore();
 
 store.runSaga(rootSaga);
 
 render(<Provider store={store}>
-        <App />
+            <PersistGate persistor={persistor}>
+                <RouterHOC />
+            </PersistGate>
     </Provider>, document.getElementById('root'));
 
 

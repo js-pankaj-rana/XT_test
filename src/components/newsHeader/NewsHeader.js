@@ -4,10 +4,10 @@ const NewsHeader = () => {
         return (
             <thead>
             <tr>
-            <th className="comments-header">
+            <th className="comments-header w-10">
                 Comments
             </th>
-            <th className="comments-header">
+            <th className="comments-header w-10">
                 Vote Count
             </th>
             <th className="comments-header">

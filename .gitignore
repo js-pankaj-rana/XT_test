@@ -1,5 +1,8 @@
 node_modules
 
+#remove build folder
+build
+
 #remove yarn file
 
 yarn-error.log
