@@ -9,7 +9,7 @@ test('Loader component snapshot testing', () => {
     
     let tree = component.toJSON();
       expect(tree).toMatchSnapshot();
-    
+   
 
 })
 

@@ -4,7 +4,7 @@ import {Chart} from './../../components/chart';
 
 
 test('Chart component snapshot testing', () => {
-    const component = renderer.create(
+      const component = renderer.create(
         <Chart  />
       );
     

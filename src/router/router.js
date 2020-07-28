@@ -5,11 +5,14 @@ import {
   Route
 } from "react-router-dom";
 
+import { createMemoryHistory } from 'history';
 import App from './../containers/app';
+
+const history = createMemoryHistory();
 
 const RouterHOC = () => {
     return (
-      <Router>
+      <Router history={history}>
           <Switch>
             <Route path="/" children={<App />} />
             <Route path="/:page" children={<App />} />

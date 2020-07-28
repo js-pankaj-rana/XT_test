@@ -1,0 +1,142 @@
+body {
+  font-family: "Aril", sans-serif;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 0.5;
+}
+
+.overlay ~ .spinner-border {
+  position: absolute;
+  left: calc(50vw - 18px);
+  top: calc(50vh - 18px);
+  z-index: 10;
+}
+
+.bg-grey {
+  background-color: #f6f3ec;
+  min-height: 100vh;
+}
+
+.comment-container {
+  font-size: 14px;
+  width: 100%;
+}
+
+.comment-container .comments-header {
+  background-color: #ff6600;
+  color: #ffffff;
+  padding: 10px 5px;
+}
+
+.comment-container .comments-header.w-10 {
+  width: 8%;
+}
+
+.pagination-wrap {
+  padding: 10px;
+  color: #fc6d0e;
+  font-weight: bolder;
+}
+
+.text-small {
+  font-size: 12px;
+}
+
+.text-grey {
+  color: #666666;
+}
+
+a.text-normal {
+  color: #000000;
+}
+
+a.text-normal:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text-normal {
+  font-size: 16px;
+}
+
+.btn-link.button-counter {
+  color: #fc6d0e;
+  font-weight: bold;
+  font-size: 14px;
+  outline: none;
+  padding: 0 5px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.btn-link.button-counter:focus {
+  outline: none;
+}
+
+.btn-link.button-counter:hover {
+  color: #fc6d0e;
+  text-decoration: none;
+}
+
+.button-link {
+  padding: 0 5px !important;
+  outline: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.button-link:focus {
+  outline: none;
+}
+
+.icon {
+  width: 10px;
+  height: 10;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.icon-upward {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 3px 6px 3px;
+  border-color: transparent transparent #5b5b62 transparent;
+}
+
+.tbody tr:nth-child(odd) {
+  background-color: #f5f6f0;
+}
+
+.tbody tr:nth-child(even) {
+  background-color: #e3e4df;
+}
+
+.chart-container {
+  height: 300px;
+}
+
+.text-red {
+  color: #fc6d0e !important;
+}
+
+.border-red {
+  border-color: #fc6d0e;
+  border-width: 2px;
+}
+
+.news-cell {
+  padding: 10px 0;
+}
+/*# sourceMappingURL=style.css.map */
