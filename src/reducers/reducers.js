@@ -8,6 +8,7 @@ const defaultState = {
 export const commentReducer = (state = defaultState, action) => {
   switch (action.type) {
     case actionType.REQUEST_NEWS_API:
+      
       return {
         ...state,
         loading: true

@@ -24,6 +24,10 @@ class App extends Component {
         this.state = {
             page: 0
         }
+
+        // if(props.staticContext){
+        //     initialData: props.staticContext.initialData
+        // }
     }
     pageDecrement = () => {
         let {page} = this.state;
@@ -34,8 +38,10 @@ class App extends Component {
                 page: prevState.page - 1 
             }
         }, () => {
+
             let page = this.state.page.toString();
             this.props.history.push('/'+page);
+
             handlePaginationData(page, this.props.localStorageNewsPageWise, this.props.requestCommentAPI);
         })
     }
@@ -61,28 +67,37 @@ class App extends Component {
         let objId = e.currentTarget.dataset.objectid;
         this.props.removeNewsObject(objId)
     }
+    
+    componentDidUpdate(prevState, nextState){
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(nextState.page, JSON.stringify(this.props.comments))
+        }
+    }
     componentWillMount(){
         let page = this.props.history.location && this.props.history.location.pathname.toString().split('/')[1];
-       
-        if( localStorage.getItem(page) && localStorage.getItem(page).length > 20 ){
+        if (typeof window !== 'undefined') {
+            if( localStorage.getItem(page) && localStorage.getItem(page).length > 20 ){
 
-            let dataPage = parseInt(page)
-            this.setState({page: dataPage})
-            let storData = JSON.parse(localStorage.getItem(dataPage.toString()));
-            this.props.localStorageNewsPageWise(storData);
+                let dataPage = parseInt(page)
+                this.setState({page: dataPage})
+                let storData = JSON.parse(localStorage.getItem(dataPage.toString()));
+                this.props.localStorageNewsPageWise(storData);
+            }
+            else {
+                let dataPage = parseInt(page)
+                page ? this.setState({
+                    page: dataPage
+                }, () => this.props.requestCommentAPI(this.state.page.toString())) : this.props.requestCommentAPI(this.state.page.toString())
+            }
+
         }
         else {
             let dataPage = parseInt(page)
-            page ? this.setState({
-                page: dataPage
-            }, () => this.props.requestCommentAPI(this.state.page.toString())) : this.props.requestCommentAPI(this.state.page.toString())
+                page ? this.setState({
+                    page: dataPage
+                }, () => this.props.requestCommentAPI(this.state.page.toString())) : this.props.requestCommentAPI(this.state.page.toString())
         }
-    }
-
-    componentDidUpdate(prevState, nextState){
-        localStorage.setItem(nextState.page, JSON.stringify(this.props.comments))
-    }
-
+    } 
     render(){
         let page = this.props.history.location && this.props.history.location.pathname && this.props.history.location.pathname.toString().split('/')[1];
 

@@ -1,25 +1,30 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux'
-import * as serviceWorker from './serviceWorker';
+import { BrowserRouter as Router } from 'react-router-dom'
+
 import './assets/css/bootstrap.min.css';
 import './assets/scss/style.scss';
 
-import {RouterHOC} from './router';
+import RouterHOC from './router';
 import configureStore from './store';
 import rootSaga from './saga';
 
-import {PersistGate} from 'redux-persist/integration/react';
+import { createBrowserHistory, createMemoryHistory } from 'history';
+let history = process.env.BROWSER ? createBrowserHistory() : createMemoryHistory();
 
-const {store, persistor} = configureStore();
+
+const {store } = configureStore();
 
 store.runSaga(rootSaga);
 
-render(<Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <RouterHOC />
-            </PersistGate>
-    </Provider>, document.getElementById('root'));
+export const App = () => (<Provider store={store}>
+                            <Router history={history}>
+                                <RouterHOC />
+                            </Router>
+                        </Provider>
+                    );
 
-
-serviceWorker.unregister();
+if (typeof window !== 'undefined') {
+    hydrate(<App />, document.getElementById('root'));
+}

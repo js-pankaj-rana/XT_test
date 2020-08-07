@@ -8,7 +8,8 @@
     "test": "jest",
     "test:dev": "jest --watchAll",
     "build": "react-scripts build",
-    "ssr": "node server/index.js"
+    "build:ssr": " react-scripts build && node server/index.js",
+    "ssr": " node server/index.js"
   },
   "author": "XT India",
   "dependencies": {
@@ -51,12 +52,14 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-core": "^6.26.3",
     "babel-jest": "^26.1.0",
     "babel-preset-env": "^1.7.0",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "regenerator-runtime": "^0.13.7"
   },
   "jest": {
     "verbose": true

@@ -1,23 +1,22 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
 
-import { createMemoryHistory } from 'history';
 import App from './../containers/app';
+import {PageNotFound} from './../components/pageNotFound';
 
-const history = createMemoryHistory();
+
+ 
 
 const RouterHOC = () => {
     return (
-      <Router history={history}>
           <Switch>
-            <Route path="/" children={<App />} />
-            <Route path="/:page" children={<App />} />
+            <Route path="/" exact children={<App />} />
+            <Route path="/:page" exact children={<App />} />
+            <Route path="*" exact children={<PageNotFound />} />
           </Switch>
-      </Router>
     );
   }
   
