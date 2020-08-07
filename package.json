@@ -4,11 +4,11 @@
   "private": true,
   "license": "ISC",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts build && node server/index.js",
     "test": "jest",
     "test:dev": "jest --watchAll",
     "build": "react-scripts build",
-    "build:ssr": " react-scripts build && node server/index.js",
+    "build:ssr": "react-scripts build && node server/index.js",
     "ssr": " node server/index.js"
   },
   "author": "XT India",
