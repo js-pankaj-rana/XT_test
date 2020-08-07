@@ -5,5 +5,7 @@ build
 
 #remove yarn file
 
+/**/__snapshots__
+
 yarn-error.log
 yarn.lock
