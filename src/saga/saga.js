@@ -8,7 +8,9 @@ import {
 import {getCommentApi} from './../services'
 
 function* getComment(action) {
+  
   console.log("action", action )
+
   try {
     const result = yield call(getCommentApi, action.payload );
     yield put({

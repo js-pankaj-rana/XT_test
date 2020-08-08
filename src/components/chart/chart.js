@@ -51,4 +51,4 @@ const Chart = ({chartData}) => {
 	);
 };
 
-export {Chart};
+export default React.memo(Chart) ;

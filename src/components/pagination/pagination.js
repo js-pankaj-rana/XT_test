@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Pagination = ({pageState, pageDecrement, pageIncrement, nbPages, resetNews}) => {
+const Pagination = ({pageState, pageDecrement, pageIncrement, nbPages }) => {
 return (
         <div className="pagination-wrap text-right">
             
@@ -13,10 +13,12 @@ return (
             |
             <button 
                 className="btn btn-link button-counter"
-                disabled={pageState > nbPages}
+                disabled={pageState >= nbPages}
                 onClick={pageIncrement}>
                     Next
             </button>
         </div>
     )    
 }
+
+export default React.memo(Pagination);

@@ -8,14 +8,12 @@ import App from './../containers/app';
 import {PageNotFound} from './../components/pageNotFound';
 
 
- 
-
 const RouterHOC = () => {
     return (
           <Switch>
             <Route path="/" exact children={<App />} />
             <Route path="/:page" exact children={<App />} />
-            <Route path="*" exact children={<PageNotFound />} />
+            <Route exact children={<PageNotFound />} />
           </Switch>
     );
   }

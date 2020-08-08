@@ -1,1 +1,3 @@
-export * from './chart';
+import Chart from './chart';
+
+export {Chart as default};
