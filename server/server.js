@@ -49,6 +49,6 @@ app.get("/:pageNumber", (req, res, next) => {
     
 app.use(express.static(path.resolve(__dirname, './..', 'build')))
 
-app.listen(process.env.port || port, () => {
-    console.log("App launched on ", process.env.port || port);
+app.listen(process.env.PORT || port, () => {
+    console.log("App launched on ", process.env.PORT || port);
 } )
