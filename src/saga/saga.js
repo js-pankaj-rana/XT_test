@@ -7,7 +7,6 @@ import {
 
 import {getCommentApi} from './../services'
 
-
 function* getComment(action) {
   console.log("action", action )
   try {
