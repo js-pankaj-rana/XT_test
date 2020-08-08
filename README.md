@@ -30,8 +30,8 @@ Project start with server file, before triggering this commannd need to run *npm
 
 It shows the Jest unit test cases, in command prompt.  
 
-# local server buil and start npm run build:sss
-For start the server with new build  trigger this command *npm run build:sss
+# local server buil and start npm run build:ssr
+For start the server with new build  trigger this command *npm run build:ssr*
 
    
 All the API request is going via axios and saga middleware.
