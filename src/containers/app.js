@@ -1,116 +1,145 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import {withRouter, useParams } from "react-router";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 
-import { Loader } from '../components/Loader';
-import NewsHeader from '../components/newsHeader';
-import NewsRow from '../components/newsRow';
-import Chart from '../components/chart';
-import Pagination  from '../components/pagination';
-import {PageNotFound}  from '../components/pageNotFound';
+import { Loader } from "../components/Loader";
+import NewsHeader from "../components/newsHeader";
+import NewsRow from "../components/newsRow";
+import Chart from "../components/chart";
+import Pagination from "../components/pagination";
+import { PageNotFound } from "../components/pageNotFound";
 
 import {
-    requestCommentAPI,
-    voteIncrementPoint,
-    removeNewsObject,
-    localStorageNewsPageWise
-}  from '../action';
+  requestCommentAPI,
+  voteIncrementPoint,
+  removeNewsObject,
+  localStorageNewsPageWise,
+} from "../action";
 
 const App = (props) => {
-    const pageNumber = parseInt(useParams().page);
-    const [page, setPage] = useState( pageNumber || 0 );
+  const navigate = useNavigate();
+  const { page } = useParams();
 
-    useEffect(() => {
-        props.history.push('/'+page);
-        
-        if( localStorage.getItem(page) ){
-            let storageJson = JSON.parse(localStorage.getItem(page));
-            let isHits = storageJson.hasOwnProperty('hits');
-            isHits &&  props.localStorageNewsPageWise(storageJson);
-            return;
+  const pageNumber = parseInt(page, 10) || 0;
+
+  const [currentPage, setCurrentPage] = useState(pageNumber);
+
+  // Sync state when URL changes
+  useEffect(() => {
+    setCurrentPage(pageNumber);
+  }, [pageNumber]);
+
+  useEffect(() => {
+    navigate(`/${currentPage}`, { replace: true });
+
+    if (typeof window !== "undefined") {
+      const cache = localStorage.getItem(currentPage);
+
+      if (cache) {
+        const storageJson = JSON.parse(cache);
+
+        if (storageJson?.hits) {
+          props.localStorageNewsPageWise(storageJson);
+          return;
         }
-        props.requestCommentAPI(page);
-    }, [page])
-
-    useEffect(() => {
-        let isHits = props.comments.hasOwnProperty('hits');
-        if(isHits){
-            localStorage.setItem(page, JSON.stringify(props.comments))
-        }
-    }, [props.comments])
-    
-    const pageDecrement = () => {
-        if(page <= 0) return;
-        setPage(page - 1);
-    }
-    
-    const pageIncrement = () => {
-        setPage(page + 1);
+      }
     }
 
-    const voteIncrement = (e) => {
-        let objId = e.currentTarget.dataset.objectid;
-        props.voteIncrementPoint(objId)
+    props.requestCommentAPI(currentPage);
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      props.comments?.hits
+    ) {
+      localStorage.setItem(
+        currentPage,
+        JSON.stringify(props.comments)
+      );
     }
-    const removeNewsRow = (e) => {
-        let objId = e.currentTarget.dataset.objectid;
-        props.removeNewsObject(objId)
-    }
-        return (
-            <div className="bg-grey">
-                <div className="container">
-                    <h1 className="header text-red">Hacker News</h1>
-                </div>
-            {props.comments.loading && <Loader />}
-            
-            {props.comments && props.comments.hits && props.comments.hits.length > 0 ? (<div className="container">
-            <Pagination 
-                    pageState={page} 
-                    pageDecrement={pageDecrement}
-                    pageIncrement={pageIncrement}
-                    nbPages={props.comments.hits.nbPages}
+  }, [props.comments, currentPage]);
+
+  const pageDecrement = () => {
+    if (currentPage <= 0) return;
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  const pageIncrement = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const voteIncrement = (e) => {
+    const objId = e.currentTarget.dataset.objectid;
+    props.voteIncrementPoint(objId);
+  };
+
+  const removeNewsRow = (e) => {
+    const objId = e.currentTarget.dataset.objectid;
+    props.removeNewsObject(objId);
+  };
+
+  return (
+    <div className="bg-grey">
+      <div className="container">
+        <h1 className="header text-red">Hacker News</h1>
+      </div>
+
+      {props.comments.loading && <Loader />}
+
+      {props.comments?.hits?.length > 0 ? (
+        <div className="container">
+          <Pagination
+            pageState={currentPage}
+            pageDecrement={pageDecrement}
+            pageIncrement={pageIncrement}
+            nbPages={props.comments.nbPages}
+          />
+
+          <table className="comment-container">
+            <NewsHeader />
+
+            <tbody className="tbody">
+              {props.comments.actualData?.map((value, index) => (
+                <NewsRow
+                  key={value.objectID || index}
+                  value={value}
+                  removeNewsObject={removeNewsRow}
+                  voteIncrement={voteIncrement}
                 />
-                <table className="comment-container">
+              ))}
+            </tbody>
+          </table>
 
-                    <NewsHeader />
-                    <tbody className="tbody">
-                    {props.comments.actualData && props.comments.actualData.map(
-                            (value, index) => <NewsRow removeNewsObject={removeNewsRow} voteIncrement={voteIncrement} value={value} key={"key"+index} data-index={'cInd'+index} />
-                        )
-                    }
-                    </tbody>
-                </table>
-               <Pagination 
-                    pageState={page} 
-                    pageDecrement={pageDecrement}
-                    pageIncrement={pageIncrement}
-                    nbPages={props.comments.hits.nbPages}
-                />
-                {
-                    props.comments && props.comments.chartData && props.comments.chartData.length > 1 &&  <Chart chartData={props.comments.chartData}/>
-                }
-            </div>) : props.comments && props.comments.hits && props.comments.hits.length === 0 ? <PageNotFound /> : <p className="text-center">Loading...</p>
-            }
-            </div>
-        )
-    }
+          <Pagination
+            pageState={currentPage}
+            pageDecrement={pageDecrement}
+            pageIncrement={pageIncrement}
+            nbPages={props.comments.nbPages}
+          />
 
+          {props.comments.chartData?.length > 1 && (
+            <Chart chartData={props.comments.chartData} />
+          )}
+        </div>
+      ) : props.comments?.hits?.length === 0 ? (
+        <PageNotFound />
+      ) : (
+        <p className="text-center">Loading...</p>
+      )}
+    </div>
+  );
+};
 
-const mapStateToProps = state => {
-        return {
-            comments: state.commentReducer
-        }
-    }
-  
-const mapDispatchToProps = dispatch => ({
-    requestCommentAPI: (page) => dispatch(requestCommentAPI(page)),
-    voteIncrementPoint: (objId) => dispatch(voteIncrementPoint(objId)),
-    removeNewsObject: (objId) => dispatch(removeNewsObject(objId)),
-    localStorageNewsPageWise: (obj) => dispatch(localStorageNewsPageWise(obj))
-  });
-  
-  export default withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(App));
-  
+const mapStateToProps = (state) => ({
+  comments: state.commentReducer,
+});
+
+const mapDispatchToProps = {
+  requestCommentAPI,
+  voteIncrementPoint,
+  removeNewsObject,
+  localStorageNewsPageWise,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

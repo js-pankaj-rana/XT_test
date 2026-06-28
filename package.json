@@ -4,39 +4,36 @@
   "private": true,
   "license": "ISC",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "babel-node server/index.js",
     "test": "jest",
     "test:dev": "jest --watchAll",
     "build": "react-scripts build",
-    "build:ssr": "react-scripts build && node server/index.js",
-    "ssr": " node server/index.js"
+    "build:ssr": "react-scripts build && babel-node server/index.js",
+    "ssr": "babel-node server/index.js"
   },
   "author": "XT India",
   "dependencies": {
-    "@babel/register": "^7.10.5",
-    "@redux-saga/simple-saga-monitor": "^1.1.2",
-    "@testing-library/react": "^10.4.7",
-    "axios": "^0.19.2",
+    "@redux-saga/simple-saga-monitor": "^2.0.0",
+    "@testing-library/react": "^16.3.2",
+    "axios": "^1.18.1",
     "enzyme": "^3.11.0",
-    "express": "^4.17.1",
-    "history": "^5.0.0",
+    "express": "^5.2.1",
+    "history": "^5.3.0",
     "ignore-styles": "^5.0.1",
-    "jest": "^26.1.0",
+    "jest": "^25.0.0",
     "jest-dom": "^4.0.0",
-    "moment": "^2.27.0",
-    "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-router-redux": "^4.0.8",
-    "react-scripts": "3.4.1",
-    "react-test-render": "^1.1.2",
-    "recharts": "^1.8.5",
-    "redux": "^4.0.5",
+    "moment": "^2.30.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-redux": "^9.3.0",
+    "react-router": "^6.30.1",
+    "react-router-dom": "^6.30.1",
+    "react-scripts": "^5.0.1",
+    "recharts": "^3.9.0",
+    "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "redux-saga": "^1.1.3"
+    "redux-saga": "^1.5.0",
+    "sass": "^1.101.0"
   },
   "browserslist": {
     "production": [
@@ -51,15 +48,12 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/polyfill": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^26.1.0",
-    "babel-preset-env": "^1.7.0",
-    "react-test-renderer": "^16.13.1",
-    "regenerator-runtime": "^0.13.7"
+    "@babel/core": "^7.29.7",
+    "@babel/node": "^7.29.7",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "@babel/register": "^7.29.7"
   },
   "jest": {
     "verbose": true

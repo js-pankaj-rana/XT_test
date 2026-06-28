@@ -1,10 +1,12 @@
-import { createStore, applyMiddleware } from 'redux';
+
+import { legacy_createStore as createStore, applyMiddleware} from 'redux'
 import createSagaMiddleware, { END } from 'redux-saga';
 import sagaMonitor from '@redux-saga/simple-saga-monitor';
 import rootReducer from './../reducers';
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+  
   
   const store = createStore(
     rootReducer,

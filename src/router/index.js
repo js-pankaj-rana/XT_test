@@ -1,2 +1,2 @@
-import {RouterHOC} from './router';
-export {RouterHOC as default};
+import RouterHOC from './router';
+export default RouterHOC;
