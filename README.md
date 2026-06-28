@@ -11,8 +11,9 @@ Users can browse news articles, upvote stories, remove individual news items, an
 ## Application Preview
 
 > **Screenshot**
+<img width="3024" height="2710" alt="screencapture-localhost-8000-2-2026-06-28-17_32_32" src="https://github.com/user-attachments/assets/5f8025b1-64f7-4561-ab45-fdfb341455ec" />
 
-![Hacker News Application](./assets/application-preview.png)
+
 
 ---
 
