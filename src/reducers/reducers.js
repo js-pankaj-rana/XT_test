@@ -1,100 +1,67 @@
-import * as actionType from './../constants/constant.action';
-
+import * as actionType from "./../constants/constant.action";
+import {
+  getValidNews,
+  getChartData,
+  removeNewsItem,
+  incrementVote,
+} from "./../utils/utils";
 
 const defaultState = {
-  loading: true
+  loading: true,
 };
 
 export const commentReducer = (state = defaultState, action) => {
   switch (action.type) {
     case actionType.REQUEST_NEWS_API:
-      
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case actionType.SUCCESS_NEWS_API:
-      let actualData = action.payload.hits.filter( value => value.title && value.title );
-      let chartData = actualData && actualData.length > 0 && actualData.map( obj => {
-        let data = {
-          name: obj.objectID,
-          vote: obj.points
-        }
-        return data;
-      });
+      const actualData = getValidNews(action.payload.hits);
+      const chartData = getChartData(actualData);
 
-        return {
-          ...state,
-          ...action.payload,
-          actualData,
-          chartData,
-          loading: false
-        };
+      return {
+        ...state,
+        ...action.payload,
+        actualData,
+        chartData,
+        loading: false,
+      };
 
     case actionType.FAILURE_NEWS_API:
       return {
         ...state,
         ...action.payload,
-        loading: false
-      }
-    
-    case actionType.REMOVE_NEWS:
+        loading: false,
+      };
 
-      let actualDataFilter = state.actualData.filter(
-          value => value.objectID !== action.payload
-        )
-      let chartDataFilter = state.chartData.filter(
-          value => value.name !== action.payload
-        )  
-        
-        return {
-          ...state,
-          actualData: actualDataFilter,
-          chartData: chartDataFilter
-        }
+    case actionType.REMOVE_NEWS: {
+      const { actualData, chartData } = removeNewsItem(
+        state.actualData,
+        state.chartData,
+        action.payload,
+      );
 
-
-    case actionType.VOTE_INCREMENT:
-        let actualDataFilterV = state.actualData.map(
-          value =>  {
-             if(value.objectID === action.payload){
-               return {
-                ...value,
-                points: value.points + 1 
-               }
-             }
-             return value;
-          }
-        );
-        let chartDataFilterV = state.chartData.map(
-          value =>  {
-             if(value.name === action.payload){
-               return {
-                ...value,
-                vote: value.vote + 1 
-               }
-             }
-             return value;
-          }
-        );
-
-        return {
-          ...state,
-          actualData: actualDataFilterV,
-          chartData: chartDataFilterV
-          }
-          
-
+      return {
+        ...state,
+        actualData,
+        chartData,
+      };
+    }
+    case actionType.VOTE_INCREMENT: {
+      return {
+        ...state,
+        ...incrementVote(state, action.payload),
+      };
+    }
     case actionType.LOCAL_STORAGE_NEWS_PAGE_WISE:
       return {
-        ...action.payload
-      }
+        ...action.payload,
+      };
 
-    default: 
-      return state;  
-
-    };
-}
-
-
+    default:
+      return state;
+  }
+};

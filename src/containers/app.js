@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { legacy_connect as connect } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { Loader } from "../components/Loader";
@@ -49,14 +49,8 @@ const App = (props) => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      props.comments?.hits
-    ) {
-      localStorage.setItem(
-        currentPage,
-        JSON.stringify(props.comments)
-      );
+    if (typeof window !== "undefined" && props.comments?.hits) {
+      localStorage.setItem(currentPage, JSON.stringify(props.comments));
     }
   }, [props.comments, currentPage]);
 

@@ -30,6 +30,7 @@ export function localStorageNewsPageWise(pageObject) {
 
 
 export function removeNewsObject(objectId) {
+  debugger;
     return {
       type: REMOVE_NEWS,
       payload: objectId

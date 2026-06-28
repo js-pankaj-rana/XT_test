@@ -1,25 +1,21 @@
-import React  from 'react';
+import React from "react";
+import { TableHead } from "./TableHead";
+const headerList = ["Comments", "Vote Count", "UpVote", "News Details"];
 
 const NewsHeader = () => {
-        return (
-            <thead>
-            <tr>
-            <th className="comments-header w-10">
-                Comments
-            </th>
-            <th className="comments-header w-10">
-                Vote Count
-            </th>
-            <th className="comments-header">
-                UpVote
-            </th>
-            <th className="comments-header">
-                News Details
-            </th>
-            </tr>
-        </thead>
-        )
-    }
+  return (
+    <thead>
+      <tr>
+        {headerList.map((label, index) => (
+          <TableHead
+            key={index}
+            className={index === 0 || index === 1 ? "w-10" : ""}
+            label={label}
+          />
+        ))}
+      </tr>
+    </thead>
+  );
+};
 
-
-export const NewsHeaderMemo = React.memo(NewsHeader); 
+export const NewsHeaderMemo = React.memo(NewsHeader);
